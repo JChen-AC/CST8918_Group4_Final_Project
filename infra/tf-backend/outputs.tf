@@ -1,5 +1,5 @@
 output "resource_group_name" {
-  value       = module.backendstorage.resource_group_name
+  value       = module.backendresourcegroup.resource_group_name
   description = "tf-backend : Resource Group Name"
 
 }
