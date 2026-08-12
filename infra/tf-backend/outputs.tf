@@ -11,3 +11,9 @@ output "container_name" {
   value       = module.backendstorage.container_name
   description = "tf-backend : Container Name"
 }
+
+output "arm_access_key" {
+  value       = module.backendstorage.arm_access_key
+  description = "tf-backend : ARM Access Key"
+  sensitive   = true
+}
