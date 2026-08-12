@@ -2,8 +2,8 @@
 terraform {
   required_version = ">= 1.1.0"
   backend "azurerm" {
-    resource_group_name  = modules.backendresourcegroup.resource_group_name
-    storage_account_name = modules.backendstorage.storage_account_name
+    resource_group_name  = "cst8918grp4-githubactions-rg"
+    storage_account_name = "cst8918grp4githubactions"
     container_name       = "tfstate"
     key                  = "prod.app.tfstate"
     use_oidc             = true
