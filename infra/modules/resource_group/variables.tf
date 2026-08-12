@@ -1,7 +1,6 @@
-variable "label_prefix" {
+variable "name" {
   description = "A prefix to add to all resources"
   type        = string
-  default     = "cst8918grp4"
 }
 variable "region" {
   description = "Location of the region"
