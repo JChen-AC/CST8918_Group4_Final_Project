@@ -1,8 +1,8 @@
 module "backendresourcegroup" {
-  source       = "../modules/resource_group"
-  name = "${var.label_prefix}-githubactions-rg"
-  region       = var.region
-}  
+  source = "../modules/resource_group"
+  name   = "${var.label_prefix}-githubactions-rg"
+  region = var.region
+}
 
 module "backendstorage" {
   source       = "./modules/StorageAccount"
