@@ -1,9 +1,9 @@
 output "storage_account_name" {
-  value = azurerm_storage_account.storage.name
+  value       = azurerm_storage_account.storage.name
   description = "tf-backend : Storage Account Name"
 }
 output "container_name" {
-  value = azurerm_storage_container.container.name
+  value       = azurerm_storage_container.container.name
   description = "tf-backend : Container Name"
 }
 
