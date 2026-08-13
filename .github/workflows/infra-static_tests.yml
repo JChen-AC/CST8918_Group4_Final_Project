@@ -3,10 +3,6 @@ name: 'Terraform Static Tests'
 on:
   push:
 
-defaults:
-  run:
-    working-directory: ./infra/tf-app
-
 permissions:
   actions: read
   contents: read
@@ -16,6 +12,11 @@ jobs:
   terraform-static-tests:
     name: 'Terraform Static Tests'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        working-directory:
+          - tf-frontend
+          - tf-network
     
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -29,21 +30,25 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     # The -backend=false flag is used to prevent Terraform from using the remote backend, which is not needed for static tests.
     - name: Terraform Init
+      working-directory: ./infra/${{ matrix.working-directory }}
       run: terraform init -backend=false
 
     # Validate terraform files
     - name: Terraform Validate
+      working-directory: ./infra/${{ matrix.working-directory }}
       run: terraform validate
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # Note: This will not modify files, but will exit with a non-zero status if any files need formatting
     - name: Terraform Format
+      working-directory: ./infra
       run: terraform fmt -check -recursive
 
     # Perform a security scan of the terraform code tfsec
     - name: tfsec
       uses: tfsec/tfsec-sarif-action@master
       with:
+        working_directory: ./infra
         sarif_file: tfsec.sarif         
 
     - name: Upload SARIF file
