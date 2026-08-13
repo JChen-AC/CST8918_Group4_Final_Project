@@ -1,0 +1,7 @@
+{
+  "name": "production-deploy",
+  "issuer": "https://token.actions.githubusercontent.com",
+  "subject": "repo:JChen-AC@255022496/CST8918_Group4_Final_Project@1325909596:environment:production",
+  "description": "CST8918 Final Project - GitHub Actions",
+  "audiences": ["api://AzureADTokenExchange"]
+}
