@@ -7,7 +7,7 @@ The team is recreating the Remix Weather application environment on Azure using 
 
 ## Team Members
 | Name |GitHub Profile |
-| --- | --- | --- |
+| --- | --- |
 | Corey Mark-Stewart | [CoreyCauterize](https://github.com/CoreyCauterize) |
 | Joshua Chen |  [JChen-AC](https://github.com/JChen-AC) |
 | Naveed Hossain  | [NaveedHossain2026](https://github.com/NaveedHossain2026) |
