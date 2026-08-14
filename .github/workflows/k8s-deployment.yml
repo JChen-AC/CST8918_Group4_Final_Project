@@ -1,0 +1,81 @@
+name: Deploy Remix Weather app to AKS
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+
+jobs:
+  deploy-to-test:
+    name: Deploy to AKS Test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    environment: test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_TEST }}
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ secrets.AKS_TEST_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AKS_TEST_CLUSTER_NAME }}
+
+      - name: Deploy app to test cluster
+        env:
+          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          kubectl apply -f kubernetes/weather_namespace.yaml
+          kubectl apply -f kubernetes/weather_service.yaml
+          kubectl set image deployment/weather-app-deployment \
+            weather-app-container=${ACR_LOGIN_SERVER}/weather-app:${IMAGE_TAG} \
+            -n cst8918
+          kubectl rollout status deployment/weather-app-deployment -n cst8918 --timeout=180s
+
+  deploy-to-production:
+    name: Deploy to AKS Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_PROD }}
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ secrets.AKS_PROD_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AKS_PROD_CLUSTER_NAME }}
+
+      - name: Deploy app to production cluster
+        env:
+          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          kubectl apply -f kubernetes/weather_namespace.yaml
+          kubectl apply -f kubernetes/weather_service.yaml
+          kubectl set image deployment/weather-app-deployment \
+            weather-app-container=${ACR_LOGIN_SERVER}/weather-app:${IMAGE_TAG} \
+            -n cst8918
+          kubectl rollout status deployment/weather-app-deployment -n cst8918 --timeout=180s
