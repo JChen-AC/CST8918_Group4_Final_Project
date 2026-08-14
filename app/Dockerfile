@@ -8,13 +8,12 @@ RUN apk -U add --update-cache openssl
 ENV NODE_ENV=production
 
 # Create user and set ownership and permissions as required
-RUN <<EOT 
-addgroup student && 
-adduser -D -H -g "student" -G student student && 
-mkdir /cst8918-grp4 && 
+RUN <<EOT
+addgroup student &&
+adduser -D -H -g "student" -G student student &&
+mkdir /cst8918-grp4 &&
 chown -R student:student /cst8918-grp4
 EOT
-
 
 # Install all node_modules, including dev dependencies
 FROM base AS deps
@@ -53,5 +52,9 @@ COPY --from=production-deps /cst8918-grp4/node_modules /cst8918-grp4/node_module
 COPY --from=build /cst8918-grp4/build /cst8918-grp4/build
 COPY --from=build /cst8918-grp4/public /cst8918-grp4/public
 COPY --from=build /cst8918-grp4/package.json /cst8918-grp4/package.json
+
+# make sure the app files are owned by the non-root user, then switch to it
+RUN chown -R student:student /cst8918-grp4
+USER student
 
 CMD [ "/bin/sh", "-c", "./node_modules/.bin/remix-serve ./build/index.js" ]
