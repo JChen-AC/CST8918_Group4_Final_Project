@@ -1,0 +1,77 @@
+name: "Terraform CICD Plan"
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  ARM_ACCESS_KEY: "${{ secrets.ARM_ACCESS_KEY }}"
+
+jobs:
+  tflint:
+    name: TFLint (${{ matrix.working-directory }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        working-directory:
+          - tf-frontend
+          - tf-network
+    defaults:
+      run:
+        working-directory: ./infra/${{ matrix.working-directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Initialize TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint --format compact
+
+  terraform-plan:
+    name: Terraform Plan (${{ matrix.working-directory }})
+    runs-on: ubuntu-latest
+    env:
+      #this is needed since we are running terraform with read-only permissions
+      ARM_SKIP_PROVIDER_REGISTRATION: true
+    outputs:
+      tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
+
+    strategy:
+      matrix:
+        working-directory:
+          - tf-frontend
+          - tf-network
+    defaults:
+      run:
+        working-directory: ./infra/${{ matrix.working-directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        id: tf-plan
+        run: terraform plan -no-color
+      
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-${{ matrix.working-directory }}
+          path: ./infra/${{ matrix.working-directory }}/tfplan
