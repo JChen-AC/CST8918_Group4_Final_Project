@@ -17,6 +17,11 @@ data "terraform_remote_state" "aks" {
 module "weather_resources" {
   source = "../modules/weather_resources"
 
+  providers = {
+    kubernetes.test = kubernetes.test
+    kubernetes.prod = kubernetes.prod
+  }
+
   resource_group_name = data.azurerm_resource_group.main.name
   location            = var.region
   label_prefix        = var.label_prefix
