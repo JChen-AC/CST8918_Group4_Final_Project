@@ -28,3 +28,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "weather_api_key" {
+  description = "API key for the weather service, injected into the app as a secret"
+  type        = string
+  sensitive   = true
+}

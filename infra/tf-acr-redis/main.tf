@@ -17,9 +17,16 @@ data "terraform_remote_state" "aks" {
 module "weather_resources" {
   source = "../modules/weather_resources"
 
+  providers = {
+    kubernetes.test = kubernetes.test
+    kubernetes.prod = kubernetes.prod
+  }
+
   resource_group_name = data.azurerm_resource_group.main.name
   location            = var.region
   label_prefix        = var.label_prefix
+
+  weather_api_key = var.weather_api_key
 
   test_kubelet_identity_object_id = data.terraform_remote_state.aks.outputs.test_kubelet_identity_object_id
   prod_kubelet_identity_object_id = data.terraform_remote_state.aks.outputs.prod_kubelet_identity_object_id
