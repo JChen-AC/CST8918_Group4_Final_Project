@@ -1,0 +1,8 @@
+name: 'Terraform CICD Plan'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
