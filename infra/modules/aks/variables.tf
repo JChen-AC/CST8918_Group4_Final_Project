@@ -18,12 +18,6 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "kubernetes_version" {
-  description = "Kubernetes version for AKS"
-  type        = string
-  default     = "1.32"
-}
-
 variable "vm_size" {
   description = "VM size for the AKS system node pool"
   type        = string
@@ -58,4 +52,14 @@ variable "tags" {
   description = "Tags applied to the AKS cluster"
   type        = map(string)
   default     = {}
+}
+
+variable "service_cidr" {
+  type        = string
+  description = "CIDR for Kubernetes internal services (must not overlap the VNet)"
+}
+
+variable "dns_service_ip" {
+  type        = string
+  description = "IP address within service_cidr used for cluster DNS"
 }

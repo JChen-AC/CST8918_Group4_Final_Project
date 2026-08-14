@@ -43,11 +43,13 @@ module "aks_test" {
   resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = data.azurerm_subnet.test.id
 
-  kubernetes_version = "1.32"
-  vm_size            = "Standard_B2s"
+  vm_size = "standard_b2als_v2"
 
   auto_scaling_enabled = false
   node_count           = 1
+
+  service_cidr   = "172.16.0.0/16"
+  dns_service_ip = "172.16.0.10"
 
   tags = {
     Environment = "test"
@@ -71,12 +73,14 @@ module "aks_prod" {
   resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = data.azurerm_subnet.prod.id
 
-  kubernetes_version = "1.32"
-  vm_size            = "Standard_B2s"
+  vm_size = "standard_b2als_v2"
 
   auto_scaling_enabled = true
   min_count            = 1
   max_count            = 3
+
+  service_cidr   = "172.17.0.0/16"
+  dns_service_ip = "172.17.0.10"
 
   tags = {
     Environment = "prod"

@@ -26,6 +26,7 @@ output "test_kubelet_identity_object_id" {
 output "test_kube_config" {
   description = "Test Kube Config"
   value       = module.aks_test.kube_config
+  sensitive   = true
 }
 
 output "prod_kubelet_identity_object_id" {
@@ -35,4 +36,5 @@ output "prod_kubelet_identity_object_id" {
 output "prod_kube_config" {
   description = "Prod Kube Config"
   value       = module.aks_prod.kube_config
+  sensitive   = true
 }
