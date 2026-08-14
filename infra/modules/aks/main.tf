@@ -4,8 +4,6 @@ resource "azurerm_kubernetes_cluster" "main" {
   resource_group_name = var.resource_group_name
   dns_prefix          = var.cluster_name
 
-  kubernetes_version = var.kubernetes_version
-
   identity {
     type = "SystemAssigned"
   }
@@ -24,6 +22,8 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     network_plugin = "azure"
+    service_cidr   = var.service_cidr
+    dns_service_ip = var.dns_service_ip
   }
 
   tags = var.tags
