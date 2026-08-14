@@ -13,9 +13,9 @@ terraform {
       version = "~> 2.3"
     }
     kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.30"
-      configuration_aliases = [kubernetes.test,kubernetes.prod]
+      source                = "hashicorp/kubernetes"
+      version               = "~> 2.30"
+      configuration_aliases = [kubernetes.test, kubernetes.prod]
     }
   }
 

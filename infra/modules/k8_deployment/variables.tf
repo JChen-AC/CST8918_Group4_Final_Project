@@ -11,7 +11,7 @@ variable "env" {
 variable "weather_api_key" {
   description = "Common tags applied to resources"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 
 variable "redis_hostname" {
@@ -28,3 +28,4 @@ variable "redis_primary_access_key" {
 variable "redis_ssl_port" {
   description = "SSL port for the Redis cache"
   type        = number
+}

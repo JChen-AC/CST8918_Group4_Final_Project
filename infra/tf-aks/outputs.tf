@@ -23,16 +23,16 @@ output "test_kubelet_identity_object_id" {
   value       = module.aks_test.kubelet_identity_object_id
 }
 
-output "test_kube_config"{
+output "test_kube_config" {
   description = "Test Kube Config"
-  value = module.aks_test.kube_config
+  value       = module.aks_test.kube_config
 }
 
 output "prod_kubelet_identity_object_id" {
   description = "Kubelet identity object ID for production AKS"
   value       = module.aks_prod.kubelet_identity_object_id
 }
-output "prod_kube_config"{
+output "prod_kube_config" {
   description = "Prod Kube Config"
-  value = module.aks_prod.kube_config
+  value       = module.aks_prod.kube_config
 }

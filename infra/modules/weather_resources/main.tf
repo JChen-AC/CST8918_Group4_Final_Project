@@ -86,13 +86,13 @@ module "weather_app_test" {
     kubernetes = kubernetes.test
   }
 
-  env               = "test"
-  acr_login_server  = azurerm_container_registry.weather.login_server
-  weather_api_key   = var.weather_api_key
+  env              = "test"
+  acr_login_server = azurerm_container_registry.weather.login_server
+  weather_api_key  = var.weather_api_key
 
-  redis_hostname            = azurerm_redis_cache.test.hostname
-  redis_primary_access_key  = azurerm_redis_cache.test.primary_access_key
-  redis_ssl_port            = azurerm_redis_cache.test.ssl_port
+  redis_hostname           = azurerm_redis_cache.test.hostname
+  redis_primary_access_key = azurerm_redis_cache.test.primary_access_key
+  redis_ssl_port           = azurerm_redis_cache.test.ssl_port
 }
 
 # ---------------------------------------------------------------------------
@@ -105,11 +105,11 @@ module "weather_app_prod" {
     kubernetes = kubernetes.prod
   }
 
-  env               = "prod"
-  acr_login_server  = azurerm_container_registry.weather.login_server
-  weather_api_key   = var.weather_api_key
+  env              = "prod"
+  acr_login_server = azurerm_container_registry.weather.login_server
+  weather_api_key  = var.weather_api_key
 
-  redis_hostname            = azurerm_redis_cache.prod.hostname
-  redis_primary_access_key  = azurerm_redis_cache.prod.primary_access_key
-  redis_ssl_port            = azurerm_redis_cache.prod.ssl_port
+  redis_hostname           = azurerm_redis_cache.prod.hostname
+  redis_primary_access_key = azurerm_redis_cache.prod.primary_access_key
+  redis_ssl_port           = azurerm_redis_cache.prod.ssl_port
 }

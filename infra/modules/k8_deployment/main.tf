@@ -9,32 +9,32 @@ resource "kubernetes_namespace" "namespace" {
   }
 }
 
-resource "kubernetes_secret" "secret"{
+resource "kubernetes_secret" "secret" {
   provider = kubernetes
   metadata {
-    name = "${var.env}-secrets-cst8918"
+    name      = "${var.env}-secrets-cst8918"
     namespace = kubernetes_namespace.namespace.metadata[0].name
   }
   data = {
     WEATHER_API_KEY = var.weather_api_key
     REDIS_URL       = var.redis_hostname
     REDIS_PASSWORD  = var.redis_primary_access_key
-    REDIS_PORT      = tostring(var.redis_ssl_port)  }
+  REDIS_PORT = tostring(var.redis_ssl_port) }
 
-  type = "Opaque"  
+  type = "Opaque"
 }
 
 resource "kubernetes_deployment" "k8_deployment" {
   provider = kubernetes
   metadata {
-    name = "weather-app-deployment"
+    name      = "weather-app-deployment"
     namespace = kubernetes_namespace.namespace.metadata[0].name
-    labels = {app="weather-app"}    
+    labels    = { app = "weather-app" }
   }
   spec {
     replicas = 1
     selector {
-      match_labels = {app = "weather-app"}
+      match_labels = { app = "weather-app" }
     }
     template {
       metadata {
