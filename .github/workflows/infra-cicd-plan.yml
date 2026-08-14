@@ -22,11 +22,11 @@ jobs:
     strategy:
       matrix:
         working-directory:
-          - infra/tf-frontend
-          - infra/tf-network
+          - tf-frontend
+          - tf-network
     defaults:
       run:
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ./infra/${{ matrix.working-directory }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,11 +51,11 @@ jobs:
     strategy:
       matrix:
         working-directory:
-          - infra/tf-frontend
-          - infra/tf-network
+          - tf-frontend
+          - tf-network
     defaults:
       run:
-        working-directory: ${{ matrix.working-directory }}
+        working-directory: ./infra/${{ matrix.working-directory }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
