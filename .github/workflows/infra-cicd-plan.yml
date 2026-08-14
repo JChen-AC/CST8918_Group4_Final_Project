@@ -71,7 +71,7 @@ jobs:
         run: terraform plan -no-color
       
       - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tfplan-${{ matrix.working-directory }}
           path: ./infra/${{ matrix.working-directory }}/tfplan
