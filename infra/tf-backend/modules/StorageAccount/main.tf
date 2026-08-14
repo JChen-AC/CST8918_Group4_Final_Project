@@ -9,7 +9,7 @@ resource "azurerm_storage_account" "storage" {
   min_tls_version          = "TLS1_2"
   tags = {
     Class      = "CST8918"
-    Assignment = "Final-Project"    
+    Assignment = "Final-Project"
   }
 }
 
