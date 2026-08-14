@@ -53,7 +53,12 @@ terraform init
 terraform plan
 terraform apply
 
-cd ../tf-frontend
+cd ../tf-aks
+terraform init
+terraform plan
+terraform apply
+
+cd ../tf-acr-redis
 terraform init
 terraform plan
 terraform apply
