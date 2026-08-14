@@ -7,7 +7,6 @@ on:
 permissions:
   id-token: write
   contents: read
-  pull-requests: write
 
 env:
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
@@ -39,6 +38,7 @@ jobs:
 
       - name: Run TFLint
         run: tflint --format compact
+
   terraform-plan:
     name: Terraform Plan (${{ matrix.working-directory }})
     runs-on: ubuntu-latest
@@ -74,4 +74,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: tfplan-${{ matrix.working-directory }}
-          path: terraform.tfplan
+          path: ./infra/${{ matrix.working-directory }}/tfplan
