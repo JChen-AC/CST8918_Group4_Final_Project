@@ -45,6 +45,9 @@ RUN npm run build
 # Finally, build the production image with minimal footprint
 FROM base AS production
 
+ENV PORT="8080"
+ENV NODE_ENV="production"
+
 WORKDIR /cst8918-grp4
 
 COPY --from=production-deps /cst8918-grp4/node_modules /cst8918-grp4/node_modules
