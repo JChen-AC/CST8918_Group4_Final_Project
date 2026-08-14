@@ -12,7 +12,7 @@ terraform {
     # Azure Resource Manager provider and version
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 5.0.0"
+      version = "~> 4.0"
     }
     cloudinit = {
       source  = "hashicorp/cloudinit"
