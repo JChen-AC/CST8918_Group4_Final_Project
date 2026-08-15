@@ -11,7 +11,7 @@ The team is recreating the Remix Weather application environment on Azure using 
 | Corey Mark-Stewart | [CoreyCauterize](https://github.com/CoreyCauterize) |
 | Joshua Chen |  [JChen-AC](https://github.com/JChen-AC) |
 | Naveed Hossain  | [NaveedHossain2026](https://github.com/NaveedHossain2026) |
-| Hesheng Yang | hycst(https://github.com/hycst) |
+| Hesheng Yang | [hycst](https://github.com/hycst) |
 
 ## Special Instructions for Running the Project
 
